@@ -258,7 +258,12 @@ CastPlayer.prototype.sessionUpdateListener = function(isAlive) {
 CastPlayer.prototype.selectMedia = function(mediaIndex) {
   console.log("media selected" + mediaIndex);
 
+  if (this.currentMediaIndex != mediaIndex)
+  {
+    this.localPlayerState = PLAYER_STATE.PLAYING;
+  }
   this.currentMediaIndex = mediaIndex;
+  
   // reset progress bar
   var pi = document.getElementById("progress_indicator"); 
   var p = document.getElementById("progress"); 
@@ -914,7 +919,7 @@ CastPlayer.prototype.updateMediaControlUI = function() {
  * @param {Number} mediaIndex An number
  */
 CastPlayer.prototype.selectMediaUpdateUI = function(mediaIndex) {
-  document.getElementById('video_image').src = MEDIA_SOURCE_ROOT + this.mediaContents[mediaIndex]['thumb'];
+  //document.getElementById('video_image').src = MEDIA_SOURCE_ROOT + this.mediaContents[mediaIndex]['thumb'];
   document.getElementById("progress").style.width = '0px';
   document.getElementById("media_title").innerHTML = this.mediaContents[mediaIndex]['title'];
 };
