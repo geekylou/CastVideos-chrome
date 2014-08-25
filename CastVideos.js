@@ -136,7 +136,7 @@ CastPlayer.prototype.initializeLocalPlayer = function() {
  */
 CastPlayer.prototype.initializeCastPlayer = function() {
   
-  if (!chrome.cast || !chrome.cast.isAvailable) {
+  if (!chrome || !chrome.cast || !chrome.cast.isAvailable) {
     setTimeout(this.initializeCastPlayer.bind(this), 1000);
     return;
   }
@@ -1065,38 +1065,69 @@ CastPlayer.prototype.retrieveMediaJSON = function(src) {
  */
 CastPlayer.prototype.onMediaJsonLoad = function(evt) {
   var responseJson = evt.srcElement.response;
+  //var responseJson = JSON.parse(evt.responseText);
+
   this.mediaDirectories = responseJson['directories'];
 
   document.getElementById('carousel').innerHTML    = "";
-  document.getElementById('directories').innerHTML = "";
 
-  var ni = document.getElementById('directories');
+  var ni = document.getElementById('carousel');
   var newdiv = null;
   var divIdName = null;
+  
+  // create elements <table> and a <tbody>
+  var tbl     = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+
   for( var i = 0; i < this.mediaDirectories.length; i++ ) {
+    var row = document.createElement("tr");
+    var cell = document.createElement("td");
+
+    cell.innerHTML = '<img src="/icons/folder.gif"/>';
+    row.appendChild(cell);
+    
+    cell = document.createElement("td");
+    
+    
     newdiv = document.createElement('div');
     divIdName = 'thumb'+i+'Div';
     newdiv.setAttribute('id',divIdName);
     newdiv.setAttribute('class','thumb');
     newdiv.innerHTML = '<a href="#">' + this.mediaDirectories[i]['title'] +' </a>';
     newdiv.addEventListener('click', this.selectDirectory.bind(this, i));
-    ni.appendChild(newdiv);
+    //ni.appendChild(newdiv);
+    cell.appendChild(newdiv);
+    row.appendChild(cell);
+    tblBody.appendChild(row);
   }  
 
   this.mediaContents = responseJson['videos'];  
-  ni = document.getElementById('carousel');
+  //ni = document.getElementById('carousel');
   newdiv = null;
   divIdName = null;
   
   for( var i = 0; i < this.mediaContents.length; i++ ) {
+    var row = document.createElement("tr");
+    var cell = document.createElement("td");
+    
+    cell.innerHTML = '<img src="/icons/movie.gif"/>';
+    row.appendChild(cell);
+    
+    cell = document.createElement("td");
+    
     newdiv = document.createElement('div');
     divIdName = 'thumb'+i+'Div';
     newdiv.setAttribute('id',divIdName);
     newdiv.setAttribute('class','thumb');
     newdiv.innerHTML = '<a href="#">' + this.mediaContents[i]['title'] +' </a>';
     newdiv.addEventListener('click', this.selectMedia.bind(this, i));
-    ni.appendChild(newdiv);
+    cell.appendChild(newdiv);
+    row.appendChild(cell);
+    tblBody.appendChild(row);
   }
+  
+  tbl.appendChild(tblBody);
+  ni.appendChild(tbl);
   this.initializeUI();
 }
 
