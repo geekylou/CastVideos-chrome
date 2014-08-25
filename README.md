@@ -1,7 +1,7 @@
 # CastVideos-chrome
 ===============================
 
-This is modified version of the Chromecast demo app which can be used to cast your video collection from a web server on your PC/NAS or web site to your Chromecast.  
+This is modified version of the Chromecast demo app which can be used to cast your video collection from a web server on your PC/NAS or web site to a Chromecast.  
 
 ## Setup Instructions
 
