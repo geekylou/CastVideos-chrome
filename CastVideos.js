@@ -24,7 +24,7 @@ var MEDIA_SOURCE_ROOT = 'http://192.168.0.79/video/videos/';
 /**
  * Media source URL JSON
  **/
-var MEDIA_SOURCE_URL = 'http://192.168.0.79/video/videos/videos.json';
+var MEDIA_SOURCE_URL = 'getDirectoryListing.py';
 
 /**
  * Width of progress bar in pixel
@@ -134,6 +134,8 @@ CastPlayer.prototype.initializeLocalPlayer = function() {
  */
 CastPlayer.prototype.initializeCastPlayer = function() {
 
+  this.retrieveMediaJSON(MEDIA_SOURCE_URL)
+  
   if (!chrome.cast || !chrome.cast.isAvailable) {
     setTimeout(this.initializeCastPlayer.bind(this), 1000);
     return;
@@ -156,7 +158,7 @@ CastPlayer.prototype.initializeCastPlayer = function() {
 
   chrome.cast.initialize(apiConfig, this.onInitSuccess.bind(this), this.onError.bind(this));
 
-  this.addVideoThumbs();
+  //this.addVideoThumbs();
   this.initializeUI();
 };
 
@@ -1053,7 +1055,7 @@ CastPlayer.prototype.retrieveMediaJSON = function(src) {
  */
 CastPlayer.prototype.onMediaJsonLoad = function(evt) {
   var responseJson = evt.srcElement.response;
-  this.mediaContents = responseJson['categories'][0]['videos'];
+  this.mediaContents = responseJson['videos'];
   var ni = document.getElementById('carousel');
   var newdiv = null;
   var divIdName = null;
@@ -1062,10 +1064,11 @@ CastPlayer.prototype.onMediaJsonLoad = function(evt) {
     divIdName = 'thumb'+i+'Div';
     newdiv.setAttribute('id',divIdName);
     newdiv.setAttribute('class','thumb');
-    newdiv.innerHTML = '<img src="' + MEDIA_SOURCE_ROOT + this.mediaContents[i]['thumb'] + '" class="thumbnail">';
+    newdiv.innerHTML = '<a href="#">' + this.mediaContents[i]['title'] +' </a>';
     newdiv.addEventListener('click', this.selectMedia.bind(this, i));
     ni.appendChild(newdiv);
   }
+  this.initializeUI();
 }
 
 /**
@@ -1098,33 +1101,7 @@ CastPlayer.prototype.addVideoThumbs = function() {
 /**
  * hardcoded media json objects
  */
-var mediaJSON = {
-        "videos" : [ 
-			{ "description" : "Finn (voiced by Jeremy Shada) and Jake (voiced by John DiMaggio) meet the <q>evil<q> Cute King (voiced by Jackie Buscarino) and the Cuties, who want to kill Finn and Jake. When they discover the Cuties have never won a fight, the two decide to fake their deaths in battle out of pity.",
-              "sources" : [ "/video/videos/ADVENTURE_TIME_SEASON_3_1.mkv" ],
-              "subtitle" : "Adventure Time season 3",
-              "thumb" : "BMO_AT_season_3.jpeg",
-              "title" : "Conquest of Cuteness"
-            },
-			{ "description" : "Finn and Jake become trapped in an arena of gladiator ghosts. Finn gives in to bloodlust, and Jake becomes obsessed with keeping up the morale.",
-              "sources" : [ "/video/videos/ADVENTURE_TIME_SEASON_3_2.mkv" ],
-              "subtitle" : "Adventure Time season 3",
-              "thumb" : "BMO_AT_season_3.jpeg",
-              "title" : "Morituri Te Salutamus"
-            },
-			{ "description" : "When Marceline (voiced by Olivia Olson) accidentally traps herself in a sleep spell, Finn and Jake venture into her mind to save her. They soon learn that it was an elaborate trick by Marceline's ex-boyfriend Ash (voiced by Steve Agee) to win her back.",
-              "sources" : [ "/video/videos/ADVENTURE_TIME_SEASON_3_3.mkv" ],
-              "subtitle" : "Adventure Time season 3",
-              "thumb" : "BMO_AT_season_3.jpeg",
-              "title" : "Memory of a Memory"
-            },
-			{ "description" : "",
-              "sources" : [ "http://127.0.0.1:8081/" ],
-              "subtitle" : "Adventure Time season 3",
-              "thumb" : "BMO_AT_season_3.jpeg",
-              "title" : ""
-            }
-    ]};
+var mediaJSON = {};
 
  window.CastPlayer = CastPlayer;
 })();
