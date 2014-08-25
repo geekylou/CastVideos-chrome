@@ -114,7 +114,9 @@ var CastPlayer = function() {
 
   /* media contents from JSON */
   this.mediaContents = null;
-
+  this.mediaDirectories = null;
+  this.retrieveMediaJSON(MEDIA_SOURCE_URL);
+  
   this.initializeCastPlayer();
   this.initializeLocalPlayer();
 };
@@ -133,8 +135,6 @@ CastPlayer.prototype.initializeLocalPlayer = function() {
  * receiverListener may be invoked at any time afterwards, and possibly more than once. 
  */
 CastPlayer.prototype.initializeCastPlayer = function() {
-
-  this.retrieveMediaJSON(MEDIA_SOURCE_URL)
   
   if (!chrome.cast || !chrome.cast.isAvailable) {
     setTimeout(this.initializeCastPlayer.bind(this), 1000);
@@ -281,6 +281,16 @@ CastPlayer.prototype.selectMedia = function(mediaIndex) {
   }
   this.selectMediaUpdateUI(mediaIndex);
 };
+
+/**
+ * Select a media content
+ * @param {Number} mediaIndex A number for media index 
+ */
+CastPlayer.prototype.selectDirectory = function(mediaIndex) {
+    this.retrieveMediaJSON(MEDIA_SOURCE_URL + "?directory=" + this.mediaDirectories[mediaIndex]['directory']);
+    //alert(this.mediaDirectories[mediaIndex]['directory']);
+};
+
 
 /**
  * Requests that a receiver application session be created or joined. By default, the SessionRequest
@@ -1055,10 +1065,29 @@ CastPlayer.prototype.retrieveMediaJSON = function(src) {
  */
 CastPlayer.prototype.onMediaJsonLoad = function(evt) {
   var responseJson = evt.srcElement.response;
-  this.mediaContents = responseJson['videos'];
-  var ni = document.getElementById('carousel');
+  this.mediaDirectories = responseJson['directories'];
+
+  document.getElementById('carousel').innerHTML    = "";
+  document.getElementById('directories').innerHTML = "";
+
+  var ni = document.getElementById('directories');
   var newdiv = null;
   var divIdName = null;
+  for( var i = 0; i < this.mediaDirectories.length; i++ ) {
+    newdiv = document.createElement('div');
+    divIdName = 'thumb'+i+'Div';
+    newdiv.setAttribute('id',divIdName);
+    newdiv.setAttribute('class','thumb');
+    newdiv.innerHTML = '<a href="#">' + this.mediaDirectories[i]['title'] +' </a>';
+    newdiv.addEventListener('click', this.selectDirectory.bind(this, i));
+    ni.appendChild(newdiv);
+  }  
+
+  this.mediaContents = responseJson['videos'];  
+  ni = document.getElementById('carousel');
+  newdiv = null;
+  divIdName = null;
+  
   for( var i = 0; i < this.mediaContents.length; i++ ) {
     newdiv = document.createElement('div');
     divIdName = 'thumb'+i+'Div';
