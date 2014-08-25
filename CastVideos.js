@@ -863,20 +863,21 @@ CastPlayer.prototype.updateMediaControlUI = function() {
   if( !this.receivers_available ) {
     document.getElementById("casticonactive").style.display = 'none';
     document.getElementById("casticonidle").style.display = 'none';
-    return; 
-  }
-
-  if( this.deviceState == DEVICE_STATE.ACTIVE ) {
-    document.getElementById("casticonactive").style.display = 'block';
-    document.getElementById("casticonidle").style.display = 'none';
-    var playerState = this.castPlayerState;
-  }
-  else {
-    document.getElementById("casticonidle").style.display = 'block';
-    document.getElementById("casticonactive").style.display = 'none';
     var playerState = this.localPlayerState;
   }
-
+  else
+  {
+      if( this.deviceState == DEVICE_STATE.ACTIVE ) {
+        document.getElementById("casticonactive").style.display = 'block';
+        document.getElementById("casticonidle").style.display = 'none';
+        var playerState = this.castPlayerState;
+      }
+      else {
+        document.getElementById("casticonidle").style.display = 'block';
+        document.getElementById("casticonactive").style.display = 'none';
+        var playerState = this.localPlayerState;
+      }
+  }
   switch( playerState ) 
   {
     case PLAYER_STATE.LOADED:
@@ -1078,7 +1079,7 @@ CastPlayer.prototype.onMediaJsonError = function() {
  * Add video thumbnails div's to UI for media JSON contents 
  */
 CastPlayer.prototype.addVideoThumbs = function() {
-  this.mediaContents = mediaJSON['categories'][0]['videos'];
+  this.mediaContents = mediaJSON['videos'];
   var ni = document.getElementById('carousel');
   var newdiv = null;
   var newdivBG = null;
@@ -1097,7 +1098,7 @@ CastPlayer.prototype.addVideoThumbs = function() {
 /**
  * hardcoded media json objects
  */
-var mediaJSON = { "categories" : [ { "name" : "Movies",
+var mediaJSON = {
         "videos" : [ 
 			{ "description" : "Finn (voiced by Jeremy Shada) and Jake (voiced by John DiMaggio) meet the <q>evil<q> Cute King (voiced by Jackie Buscarino) and the Cuties, who want to kill Finn and Jake. When they discover the Cuties have never won a fight, the two decide to fake their deaths in battle out of pity.",
               "sources" : [ "/video/videos/ADVENTURE_TIME_SEASON_3_1.mkv" ],
@@ -1123,7 +1124,7 @@ var mediaJSON = { "categories" : [ { "name" : "Movies",
               "thumb" : "BMO_AT_season_3.jpeg",
               "title" : ""
             }
-    ]}]};
+    ]};
 
  window.CastPlayer = CastPlayer;
 })();
