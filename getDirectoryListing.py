@@ -17,10 +17,10 @@ arguments = cgi.FieldStorage()
 
 directory_arg = arguments.getvalue("directory")
 
+# Guard against the script being used to get directory listings of directories below the base.
 if directory_arg and directory_arg.find("..") > 0:
     directory_arg = None
 
-# Guard against the script being used to get directory listings of directories below the base.
 if directory_arg:
     path = BASE_PATH + "/" + directory_arg
 else:
