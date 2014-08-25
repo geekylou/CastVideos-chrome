@@ -1,7 +1,7 @@
 # CastVideos-chrome
 ===============================
 
-This Google Cast demo app shows how to cast videos from a Chrome browser using Cast Chrome Sender SDK. It serves to demonstrate how to write a HTML5/Javascript Cast sender app that is fully compliant with the Design Checklist.
+This is modified version of the Chromecast demo app which can be used to cast your video collection from a web server on your PC/NAS or web site to your Chromecast.  
 
 ## Setup Instructions
 
@@ -13,10 +13,12 @@ This Google Cast demo app shows how to cast videos from a Chrome browser using C
  See the developer guide and release notes at https://developers.google.com/cast/ for more details.
  
 # Steps:
- 1. Put all files on your own server
- 2. Use the default media receiver app: no change or change YOUR_APP_ID to your own in CastVideos.js
+ 1. Put all files on your own server.  This server can be on your local network or PC if you don't want the site accessible to the internet.
+ 2. Setup your web server so that it can execute python CGI scripts.
+ 3. Change the BASE_URL value at the top of the getDirectoryListing.py file to point to the URL of your video library.
  4. Open a browser and point to your page at http://[YOUR_SERVER_LOCATION]/CastVideos-chrome/
 
+# Developer stuff from the demo app.
 ##Documentation
 * Cast APIs: http://developers.google.com/cast/docs/chrome_sender
 
