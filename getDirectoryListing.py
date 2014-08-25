@@ -3,7 +3,7 @@
 
 # The base path where your content is.  This should be set to '.' if content is in the same directory as the script.
 BASE_PATH="../videos"
-
+BASE_URL ="http://192.168.0.79/video/videos/"
 import os
 import cgitb
 import cgi
@@ -44,7 +44,7 @@ for (dirpath, dirnames, filenames) in os.walk(path):
             directories.append( {"title" : dirname , "directory" : [base_arg + dirname] } )
     for filename in filenames:
         if filename.endswith(".mp4") or filename.endswith(".mov") or filename.endswith(".mkv"):
-            videos.append( {"title" : filename , "sources" : [BASE_PATH + "/" + filename] } )
+            videos.append( {"title" : filename , "sources" : [BASE_URL + path + "/" + filename] } )
     break
     
 data = { "videos" : videos , "directories" : directories}
