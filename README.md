@@ -15,7 +15,7 @@ This is modified version of the Chromecast demo app which can be used to cast yo
 # Steps:
  1. Put all files on your own server.  This server can be on your local network or PC if you don't want the site accessible to the internet.
  2. Setup your web server so that it can execute python CGI scripts.
- 3. Change the BASE_URL value at the top of the getDirectoryListing.py file to point to the URL of your video library.
+ 3. Change the BASE_PATH value at the top of the getDirectoryListing.py file to point to the URL of your video library.
  4. Open a browser and point to your page at http://[YOUR_SERVER_LOCATION]/CastVideos-chrome/
 
 # Developer stuff from the demo app.
