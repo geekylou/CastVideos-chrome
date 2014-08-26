@@ -9,7 +9,8 @@ This is modified version of the Chromecast demo app which can be used to cast yo
  1. Get a Chromecast device
  2. Install appropriate Chrome browser
  3. Install appropriate Chrome Cast extension
-
+ 4. A web server to host the script and your video content.  This can be either on your local network or the internet.
+ 
  See the developer guide and release notes at https://developers.google.com/cast/ for more details.
  
 # Steps:
