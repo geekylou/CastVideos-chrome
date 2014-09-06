@@ -1088,7 +1088,7 @@ CastPlayer.prototype.onMediaJsonLoad = function(evt) {
     var row = document.createElement("tr");
     var cell = document.createElement("td");
 
-    cell.innerHTML = '<img src="/icons/folder.gif"/>';
+    cell.innerHTML = '<img src="'+this.mediaDirectories[i]['icon']+'"/>';
     row.appendChild(cell);
     
     cell = document.createElement("td");
@@ -1115,7 +1115,7 @@ CastPlayer.prototype.onMediaJsonLoad = function(evt) {
     var row = document.createElement("tr");
     var cell = document.createElement("td");
     
-    cell.innerHTML = '<img src="/icons/movie.gif"/>';
+    cell.innerHTML = '<img src="'+this.mediaContents[i]['icon']+'"/>';
     row.appendChild(cell);
     
     cell = document.createElement("td");

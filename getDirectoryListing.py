@@ -40,22 +40,22 @@ for (dirpath, dirnames, filenames) in os.walk(path):
         base_arg = directory_arg + "/"
         
         if directory_arg.rfind('/') > 0:
-            directories.append( {"title" : ".." , "directory" : directory_arg[:directory_arg.rfind('/')] } )
+            directories.append( {"title" : ".." , "icon" : "/icons/back.gif", "directory" : directory_arg[:directory_arg.rfind('/')] } )
         else:
-            directories.append( {"title" : ".." , "directory" : "" } )        
+            directories.append( {"title" : ".." , "icon" : "/icons/back.gif", "directory" : "" } )        
     else:
         base_arg = ""
     
     dirnames.sort()
         
     for dirname in dirnames:
-            directories.append( {"title" : dirname , "directory" : [base_arg + dirname] } )
+            directories.append( {"title" : dirname , "icon" : "/icons/folder.gif", "directory" : [base_arg + dirname] } )
             
     filenames.sort()
     
     for filename in filenames:
         if filename.endswith(".mp4") or filename.endswith(".mov") or filename.endswith(".mkv"):
-            videos.append( {"title" : filename , "sources" : [BASE_URL + base_arg + "/" + filename] } )
+            videos.append( {"title" : filename , "icon" : "/icons/movie.gif", "sources" : [BASE_URL + base_arg + "/" + filename] } )
     # Break here as we are only interested in the top level directory.
     break
     
