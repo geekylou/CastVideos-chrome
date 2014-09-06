@@ -40,9 +40,9 @@ for (dirpath, dirnames, filenames) in os.walk(path):
         base_arg = directory_arg + "/"
         
         if directory_arg.rfind('/') > 0:
-            directories.append( {"title" : ".." , "icon" : "/icons/back.gif", "directory" : directory_arg[:directory_arg.rfind('/')] } )
+            directories.append( {"title" : ".." , "icon" : "/icons/back.gif", "directory" : [directory_arg[:directory_arg.rfind('/')]] } )
         else:
-            directories.append( {"title" : ".." , "icon" : "/icons/back.gif", "directory" : "" } )        
+            directories.append( {"title" : ".." , "icon" : "/icons/back.gif", "directory" : [""] } )        
     else:
         base_arg = ""
     
