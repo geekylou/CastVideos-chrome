@@ -1089,6 +1089,7 @@ CastPlayer.prototype.onMediaJsonLoad = function(evt) {
     var cell = document.createElement("td");
 
     cell.innerHTML = '<img src="'+this.mediaDirectories[i]['icon']+'"/>';
+    cell.addEventListener('click', this.selectDirectory.bind(this, i));
     row.appendChild(cell);
     
     cell = document.createElement("td");
@@ -1116,6 +1117,7 @@ CastPlayer.prototype.onMediaJsonLoad = function(evt) {
     var cell = document.createElement("td");
     
     cell.innerHTML = '<img src="'+this.mediaContents[i]['icon']+'"/>';
+    cell.addEventListener('click', this.selectMedia.bind(this, i));
     row.appendChild(cell);
     
     cell = document.createElement("td");
